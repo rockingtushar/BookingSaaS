@@ -6,7 +6,7 @@ ssl_context = ssl.create_default_context()
 ssl_context.check_hostname = False
 ssl_context.verify_mode = ssl.CERT_NONE
 
-engine = create_async_engine(settings.DATABASE_URL, echo=True, pool_pre_ping=True, pool_size=5, max_overflow=10, connect_args={"ssl": ssl_context})
+engine = create_async_engine(settings.DATABASE_URL, echo=True, pool_pre_ping=True, pool_size=5, pool_recycle=300, connect_args={"ssl": ssl_context,"statement_cache_size":0})
 
 SessionLocal = async_sessionmaker(
     bind=engine,
